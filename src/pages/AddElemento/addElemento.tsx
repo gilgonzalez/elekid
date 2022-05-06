@@ -24,34 +24,33 @@ import React, { useState, useRef } from "react";
 import { trash } from "ionicons/icons";
 const AddElemento: React.FC = () => {
   const inputNombreElectrodomestico = useRef<HTMLIonInputElement>(null);
-  const inputKwatios = useRef<HTMLIonInputElement>(null);
-  
+  const inputkWatios = useRef<HTMLIonInputElement>(null);
   const [listadoElectrodomesticos, setListadoElectrodomesticos] = useState([
     {
       id: 0,
       nombre: "lavadora",
-      Kwatios: 230,
+      kWatios: 230,
       img: "/assets/img/lavadora.jpg",
       activado: false,
     },
     {
       id: 1,
       nombre: "secadora",
-      Kwatios: 150,
+      kWatios: 150,
       img: "/assets/img/secadora.jpg",
-      activado: false,
+      activado: true,
     },
     {
       id: 2,
       nombre: "televisor",
-      Kwatios: 50,
+      kWatios: 50,
       img: "/assets/img/tv.png",
       activado: false,
     },
     {
       id: 3,
       nombre: "ordenador",
-      Kwatios: 15,
+      kWatios: 15,
       img: "/assets/img/pc.jpg",
       activado: true,
     },
@@ -60,14 +59,14 @@ const AddElemento: React.FC = () => {
   const aceptarClick = () => {
     const nombreElectrodomestico = inputNombreElectrodomestico.current!
       .value as string;
-    const nKwatios = +inputKwatios.current!.value!;
-    if (nombreElectrodomestico !== undefined && nKwatios !== undefined) {
+    const nkWatios = +inputkWatios.current!.value!;
+    if (nombreElectrodomestico !== undefined && nkWatios !== undefined) {
       const increment = () => setIdentificador(identificador + 1);
       increment();
       listadoElectrodomesticos.push({
         id: identificador,
         nombre: nombreElectrodomestico,
-        Kwatios: nKwatios,
+        kWatios: nkWatios,
         img: "./assets/img/iconos/icon_elect.png",
         activado: false,
       });
@@ -75,8 +74,12 @@ const AddElemento: React.FC = () => {
       console.log(listadoElectrodomesticos);
     }
   };
-  const calcularKwatios = () => {
-    console.log(listadoElectrodomesticos);
+  const calcularkWatios = () => {
+    var eActivos = listadoElectrodomesticos.filter(electrodomestico => electrodomestico.activado === true)
+    var total = 0;
+    eActivos.map(item => total += item.kWatios)
+    console.log(eActivos);
+    console.log(total);
   };
   function borrarElemento(id:number){ 
       setListadoElectrodomesticos(listadoElectrodomesticos.filter(electrodomestico => electrodomestico.id !== id));
@@ -100,14 +103,14 @@ const AddElemento: React.FC = () => {
             ></IonInput>
           </IonItem>
 
-          <IonItemDivider color="secondary">Consumo en Kwatios</IonItemDivider>
+          <IonItemDivider color="secondary">Consumo en kWatios</IonItemDivider>
           <IonItem>
             <IonInput
               value=""
-              placeholder="Kwatios/hora"
+              placeholder="kWatios/hora"
               type="number"
               clearInput
-              ref={inputKwatios}
+              ref={inputkWatios}
             ></IonInput>
           </IonItem>
           <IonGrid>
@@ -125,7 +128,7 @@ const AddElemento: React.FC = () => {
               <IonCol>
                 <IonButton
                   color="danger"
-                  onClick={calcularKwatios}
+                  onClick={calcularkWatios}
                   size="large"
                   className="ion-margin"
                 >
@@ -141,7 +144,7 @@ const AddElemento: React.FC = () => {
                 <IonItem>
                   <IonLabel className="ion-margin">
                     <h2>{elemento.nombre}</h2>
-                    <p>{elemento.Kwatios} Kwatios/Hora</p>
+                    <p>{elemento.kWatios} kWatios/Hora</p>
                   </IonLabel>
                   <IonThumbnail slot="start">
                     <IonImg src={elemento.img} />
