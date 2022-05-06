@@ -20,9 +20,14 @@ import {
   IonIcon,
 } from "@ionic/react";
 import Menu from "components/Menu";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { trash } from "ionicons/icons";
+import { useAppDispatch } from "store/store";
+import { setConsultaDate, setKWatios } from "pages/Consulta/consultaSlice";
+
 const AddElemento: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   const inputNombreElectrodomestico = useRef<HTMLIonInputElement>(null);
   const inputkWatios = useRef<HTMLIonInputElement>(null);
   const [listadoElectrodomesticos, setListadoElectrodomesticos] = useState([
@@ -55,8 +60,15 @@ const AddElemento: React.FC = () => {
       activado: true,
     },
   ]);
-  const [identificador, setIdentificador] = useState(listadoElectrodomesticos.length);
-  const aceptarClick = () => {
+  const [identificador, setIdentificador] = useState(
+    listadoElectrodomesticos.length
+  );
+
+  const changeItemActivoHandler = useCallback((elemento: any) => {
+    elemento.activado = !elemento.activado;
+  }, []);
+
+  const aceptarClick = useCallback(() => {
     const nombreElectrodomestico = inputNombreElectrodomestico.current!
       .value as string;
     const nkWatios = +inputkWatios.current!.value!;
@@ -73,19 +85,29 @@ const AddElemento: React.FC = () => {
       setListadoElectrodomesticos(listadoElectrodomesticos);
       console.log(listadoElectrodomesticos);
     }
-  };
-  const calcularkWatios = () => {
-    var eActivos = listadoElectrodomesticos.filter(electrodomestico => electrodomestico.activado === true)
+  }, [identificador, listadoElectrodomesticos]);
+
+  const calcularkWatios = useCallback(() => {
+    var eActivos = listadoElectrodomesticos.filter(
+      (electrodomestico) => electrodomestico.activado === true
+    );
     var total = 0;
-    eActivos.map(item => total += item.kWatios)
+    eActivos.map((item) => (total += item.kWatios));
     console.log(eActivos);
     console.log(total);
-  };
-  function borrarElemento(id:number){ 
-      setListadoElectrodomesticos(listadoElectrodomesticos.filter(electrodomestico => electrodomestico.id !== id));
-      console.log(listadoElectrodomesticos);
+    dispatch(setKWatios(total));
+    dispatch(setConsultaDate(new Date().getTime()));
+  }, [dispatch, listadoElectrodomesticos]);
+
+  function borrarElemento(id: number) {
+    setListadoElectrodomesticos(
+      listadoElectrodomesticos.filter(
+        (electrodomestico) => electrodomestico.id !== id
+      )
+    );
+    console.log(listadoElectrodomesticos);
   }
- 
+
   return (
     <IonPage>
       <Menu titulo="AGREGAR ELECTRODOMESTICO" />
@@ -155,13 +177,16 @@ const AddElemento: React.FC = () => {
                     color="primary"
                     mode="md"
                     checked={elemento.activado}
+                    onIonChange={(e) => {
+                      elemento.activado = !elemento.activado;
+                    }}
                   />
                 </IonItem>
                 <IonItemOptions side="start">
                   <IonItemOption
                     color="danger"
                     slot="icon-only"
-                    onClick={()=>borrarElemento(elemento.id)} 
+                    onClick={() => borrarElemento(elemento.id)}
                   >
                     <IonIcon icon={trash} />
                   </IonItemOption>
