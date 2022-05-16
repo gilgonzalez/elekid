@@ -20,32 +20,30 @@ import {
         breakpoints={[0, 0.2, 0.75, 1]}
         initialBreakpoint={0.75}
         backdropBreakpoint={0.2}
-       
       >
         <IonHeader>
           <IonToolbar>
             <IonTitle>{hora}</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <IonContent  >
-          <IonCard >
+        <IonContent>
+          <IonCard>
             <IonCardHeader>
-              <IonCardSubtitle color='dark'>
+              <IonCardSubtitle color="dark">
                 A continuación se muestran {texto}
               </IonCardSubtitle>
             </IonCardHeader>
-            <IonCardContent >
-                <IonList>
-                {listadoHoras.map((item)=>
-                <IonItem className={item.zone} key={item.hour}>
+            <IonCardContent>
+              <IonList>
+                {listadoHoras?.map((item) => (
+                  <IonItem className={item.zone} key={item.hour}>
                     <IonLabel>A las {item.hour} </IonLabel>
                     <IonLabel>{item.price} € kWatio/h</IonLabel>
-                </IonItem>)}         
-                </IonList>
-             
-          </IonCardContent>
+                  </IonItem>
+                ))}
+              </IonList>
+            </IonCardContent>
           </IonCard>
-        
         </IonContent>
       </IonModal>
     );

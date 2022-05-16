@@ -23,30 +23,29 @@ const ModalConsulta = ({
       isOpen={consultaAbierta}
       onDidDismiss={cerrarModal}
       breakpoints={[0, 0.2, 0.75, 1]}
-      initialBreakpoint={0.75}
+      initialBreakpoint={1}
       backdropBreakpoint={0.2}
-     
     >
       <IonHeader>
         <IonToolbar>
           <IonTitle>{hora}</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent  >
+      <IonContent>
         <IonImg src={rutaImagen}></IonImg>
-        <IonCard className={estado} >
+        <IonCard className={estado}>
           <IonCardHeader>
-            <IonCardSubtitle color='light'>
-              En estos momentos estás consumiendo un total de {kWatioTotal} kWatio
+            <IonCardSubtitle color="light">
+              En estos momentos estás consumiendo un total de {kWatioTotal}{" "}
+              kWatio
             </IonCardSubtitle>
             <IonCardTitle>Con un coste total de : {costeActual}</IonCardTitle>
           </IonCardHeader>
 
-          <IonCardContent className={estado} >
-            <IonLabel color='light'> {texto}</IonLabel>   
-        </IonCardContent>
+          <IonCardContent className={estado}>
+            <IonLabel color="light"> {texto}</IonLabel>
+          </IonCardContent>
         </IonCard>
-      
       </IonContent>
     </IonModal>
   );

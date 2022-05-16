@@ -1,29 +1,29 @@
 import {
-  IonPage,
-  IonItem,
-  IonInput,
-  IonContent,
-  IonItemDivider,
-  IonList,
   IonButton,
-  IonLabel,
-  IonImg,
-  IonThumbnail,
   IonCheckbox,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonIcon,
+  IonImg,
+  IonInput,
+  IonItem,
+  IonItemDivider,
   IonItemOption,
   IonItemOptions,
   IonItemSliding,
-  IonCol,
-  IonGrid,
+  IonLabel,
+  IonList,
+  IonPage,
   IonRow,
-  IonIcon,
+  IonThumbnail,
   useIonToast,
 } from "@ionic/react";
 import Menu from "components/Menu";
-import React, { useState, useRef, useCallback } from "react";
 import { trash } from "ionicons/icons";
-import { useAppDispatch, useAppSelector } from "store/store";
-import { setConsultaDate, setKWatios } from "pages/Consulta/consultaSlice";
+import { setKWatios } from "pages/Consulta/consultaSlice";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useAppDispatch } from "store/store";
 import { useLocalStorage } from "store/useLocalStorage";
 
 /*CREA LA PAGINA PARA GESTIONAR LOS ELECTRODOMESTICOS DE LOS QUE DISPONE EL USUARIO*/
@@ -108,7 +108,19 @@ const AddElemento: React.FC = () => {
         duration: 3000,
       });
     }
-  }, [identificador, listadoElectrodomesticos]);
+  }, [
+    dismiss,
+    identificador,
+    listadoElectrodomesticos,
+    present,
+    setListadoElectrodomesticos,
+  ]);
+
+  const [kwInicial, setKwInicial] = useLocalStorage("kwInicial", 0);
+
+  /*   useEffect(() => {
+    dispatch(setKWatios(kwInicial));
+  }, [dispatch, kwInicial]); */
 
   //Funcion que se utiliza para saber la cantidad de kWatios que se está utilizando, teniendo en cuenta la cantidad y los electrodomesticos con check activo
   const calcularkWatios = useCallback(() => {
@@ -117,11 +129,14 @@ const AddElemento: React.FC = () => {
       (electrodomestico: { activado: boolean }) =>
         electrodomestico.activado === true
     );
-    var total = 0;
+
     //Recorro cada uno de los items de la lista y los acumulo en el total
-    eActivos.map((item: { kWatios: number; cantidad: number }) => {
-      total += item.kWatios * item.cantidad;
-    });
+    const total = eActivos.reduce(
+      (prev: any, item: any) => prev + item.kWatios * item.cantidad,
+      0
+    );
+
+    console.log(total);
     const totalReducido = Math.round((total + Number.EPSILON) * 100) / 100;
 
     present({
@@ -130,9 +145,11 @@ const AddElemento: React.FC = () => {
       duration: 5000,
     });
 
+    setKwInicial(totalReducido);
+
     //Utilizo el dispatcher para tener disponible esta información en toda la aplicación
     dispatch(setKWatios(totalReducido));
-  }, [dispatch, listadoElectrodomesticos]);
+  }, [dismiss, dispatch, listadoElectrodomesticos, present, setKwInicial]);
   //Utilizando el useState, cambio el listado por uno filtrado, quitando el elemento que tiene el mismo id
   function borrarElemento(id: number) {
     setListadoElectrodomesticos(
@@ -247,5 +264,5 @@ const AddElemento: React.FC = () => {
       </IonContent>
     </IonPage>
   );
-};
+};;
 export default AddElemento;

@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import LocalStorage from "services/local-storage";
 
 const SLICE_CONSTANTS = {
   NAME: "consulta",
@@ -17,15 +18,57 @@ export const getDatos = createAsyncThunk<any, void>(
         headers: {
           "Content-type": "application/json;charset=UTF-8",
           authorization:
-            "fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899efa",
+            "fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899ef",
         },
       }
     );
     const data = await response.json();
 
     return data;
+  },
+  {
+    condition: (_, { getState, extra }) => {
+      const { consulta } = getState() as any;
+      if (new Date().getTime() - consulta.fetchDate <= 5000) {
+        return false;
+      }
+      return true;
+    },
   }
 );
+
+const loadKwInicial = () => {
+  return LocalStorage.getSync<number>("kwInicial") ?? 0;
+};
+
+// https://github.com/jorgeatgu/apaga-luz/blob/main/update_create_datasets.js
+const transform_today_prices = (json_today_prices: any) => {
+  function createZone(hour: number) {
+    if (hour >= 0 && hour < 8) {
+      return "valle";
+    } else if (
+      (hour >= 8 && hour < 10) ||
+      (hour >= 14 && hour < 18) ||
+      (hour >= 22 && hour < 24)
+    ) {
+      return "llano";
+    } else {
+      return "punta";
+    }
+  }
+
+  return json_today_prices.PVPC.map(
+    ({ Dia, Hora, PCB }: { Dia: any; Hora: any; PCB: any }) => {
+      const get_first_hour = Hora.split("-")[0];
+      return {
+        day: Dia,
+        hour: +get_first_hour,
+        price: +PCB.split(",")[0] / 1000,
+        zone: createZone(+get_first_hour),
+      };
+    }
+  );
+};
 
 const initialState: {
   loading?: boolean;
@@ -33,8 +76,9 @@ const initialState: {
   result: number;
   date?: number;
   datos?: any;
+  fetchDate?: number;
 } = {
-  result: 0,
+  result: loadKwInicial(),
   date: undefined,
   datos: undefined,
 };
@@ -62,8 +106,9 @@ export const appStateSlice = createSlice({
     });
     builder.addCase(getDatos.fulfilled, (state, action) => {
       console.log(`Data retrieved in ${action.type}`, action.payload);
-      state.datos = action.payload;
+      state.datos = transform_today_prices(action.payload);
       state.loading = false;
+      state.fetchDate = new Date().getTime();
     });
     builder.addCase(getDatos.rejected, (state, action) => {
       if (action.error && action.error.name === "AbortError") {
