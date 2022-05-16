@@ -22,7 +22,7 @@ import {
 import Menu from "components/Menu";
 import React, { useState, useRef, useCallback } from "react";
 import { trash } from "ionicons/icons";
-import { useAppDispatch } from "store/store";
+import { useAppDispatch, useAppSelector } from "store/store";
 import { setConsultaDate, setKWatios } from "pages/Consulta/consultaSlice";
 import { useLocalStorage } from "store/useLocalStorage";
 
@@ -123,15 +123,15 @@ import { useLocalStorage } from "store/useLocalStorage";
       total += item.kWatios * item.cantidad;
     });
     const totalReducido = Math.round((total + Number.EPSILON) * 100) / 100;
-    //Utilizo el dispatcher para tener disponible esta información en toda la aplicación
+    
     present({
       buttons: [{ text: "hide", handler: () => dismiss() }],
       message: "El total de kWatios es " + totalReducido,
       duration: 5000,
     });
     
+    //Utilizo el dispatcher para tener disponible esta información en toda la aplicación
     dispatch(setKWatios(totalReducido));
-    dispatch(setConsultaDate(new Date().getTime()));
   }, [dispatch, listadoElectrodomesticos]);
   //Utilizando el useState, cambio el listado por uno filtrado, quitando el elemento que tiene el mismo id
   function borrarElemento(id: number) {

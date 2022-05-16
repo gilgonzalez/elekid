@@ -8,31 +8,54 @@ import {
   IonTitle,
 } from "@ionic/react";
 import BarraMenu from "components/Menu";
+import ModalConsultaListado from "components/ModalConsultaListado";
 import ModalConsulta from "components/PlantillaConsulta";
 import { useState, useEffect, useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { getDatos } from "./consultaSlice";
 const Consulta: React.FC = () => {
   const [consultaAbierta, setConsultaAbierta] = useState(false);
+  const [consultaAbiertaTodas, setConsultaAbiertaTodas] = useState(false);
+  const [consultaAbiertaBarata, setConsultaAbiertaBarata] = useState(false);
+  const [consultaAbiertaCara, setConsultaAbiertaCara] = useState(false);
+  const [consultaAbiertaPromedio, setConsultaAbiertaPromedio] = useState(false);
+
   const [estado, setEstado] = useState("");
   const [icono, setIcono] = useState("");
   const fechaActual = new Date();
   const hora = fechaActual.getHours();
   const horaYminuto = `${fechaActual.getHours()} : ${fechaActual.getMinutes()}`;
-  const [texto, setTexto] = useState('');
+  const [texto, setTexto] = useState("");
 
   const hoyData = require("../../json/precio_hoy.json");
   /*for(const elemento of hoyData){
     console.log(hoyData)
   }*/
+  const listadoTodasHoras = hoyData.map((item: any)=>item)
+  const listadoHorasPromedio = hoyData.filter((item: { zone: string }) => item.zone==='llano');
+  const listadoHorasCara = hoyData.filter((item: { zone: string; })=> item.zone==='punta')
+  const listadoHorasBarata = hoyData.filter((item: { zone: string; })=> item.zone==='valle')
+  console.log(listadoHorasPromedio);
   const tramo = hoyData.filter(
     (tramo: { hour: number }) => tramo.hour === hora
   );
-  const cerrarModal = () => {
+  const cerrarModalConsulta = () => {
     setConsultaAbierta(false);
   };
+  const cerrarModalConsultaTodas = () => {
+    setConsultaAbiertaTodas(false);
+  };
+  const cerrarModalConsultaBarata = () => {
+    setConsultaAbiertaBarata(false);
+  };
+  const cerrarModalConsultaPromedio = () => {
+    setConsultaAbiertaPromedio(false);
+  };
+  const cerrarModalConsultaCara = () => {
+    setConsultaAbiertaCara(false);
+  };
   const asignarIcono = () => {
-    console.log(tramo[0].zone)
+    console.log(tramo[0].zone);
     switch (tramo[0].zone) {
       case "punta":
         return "../assets/img/iconos/sad.png";
@@ -45,10 +68,10 @@ const Consulta: React.FC = () => {
     }
   };
   const asignarTexto = () => {
-    console.log(tramo[0].zone)
+    console.log(tramo[0].zone);
     switch (tramo[0].zone) {
       case "punta":
-        return "QUIZÀS DEBERÍAS PLANTEARTE APAGAR TODOS LOS ELECTRODOMESTICOS E IRTE A POR ESPÁRRAGOS";
+        return "QUIZÁS DEBERÍAS PLANTEARTE APAGAR TODOS LOS ELECTRODOMESTICOS E IRTE A POR ESPÁRRAGOS";
       case "llano":
         return "NO ES UNA HORA MALA PARA JUGAR A LA PLAY, PERO NO TE FLIPES";
       case "valle":
@@ -57,24 +80,24 @@ const Consulta: React.FC = () => {
         return "NO TENGO NI IDEA DE QUÉ ESTÁ PASANDO";
     }
   };
-  const asignarEstado = tramo[0].zone === undefined ? 'llano' : tramo[0].zone;
-  
+  const asignarEstado = tramo[0].zone === undefined ? "llano" : tramo[0].zone;
+
   const cambiarIconoEstado = useCallback(() => {
     setIcono(asignarIcono);
     setEstado(asignarEstado);
     setTexto(asignarTexto);
   }, [tramo]);
   const dispatch = useAppDispatch();
+  const datos = useAppSelector((state) => state.consulta.datos);
+  const kWatios = useAppSelector((state) => state.consulta.result);
+  console.log(kWatios);
+  const num = kWatios * 0.254;
+  const redondeado = Math.round((num + Number.EPSILON) * 100) / 100;
+  const costeActual = `${redondeado} €`;
 
   useEffect(() => {
     dispatch(getDatos());
   }, [dispatch]);
-
-  const datos = useAppSelector((state) => state.consulta.datos);
-  const kWatios = useAppSelector((state) => state.consulta.result);
-  const num = kWatios * 0.254;
-  const redondeado = Math.round((num + Number.EPSILON) * 100) / 100;
-  const costeActual = `${redondeado} €`;
 
   const consultaDate = useAppSelector((state) =>
     state.consulta.date ? new Date(state.consulta.date) : undefined
@@ -84,7 +107,7 @@ const Consulta: React.FC = () => {
   return (
     <IonPage>
       <BarraMenu titulo="CONSULTA" />
-      <IonContent >
+      <IonContent>
         <IonTitle className="ion-padding" size="large">
           Listado de Consultas
         </IonTitle>
@@ -117,7 +140,7 @@ const Consulta: React.FC = () => {
         <IonButton
           className="ion-padding"
           onClick={() => {
-            setConsultaAbierta(true);
+            setConsultaAbiertaTodas(true);
             cambiarIconoEstado();
           }}
           color="favorite"
@@ -129,7 +152,7 @@ const Consulta: React.FC = () => {
         <IonButton
           className="ion-padding"
           onClick={() => {
-            setConsultaAbierta(true);
+            setConsultaAbiertaBarata(true);
             cambiarIconoEstado();
           }}
           color="favorite"
@@ -141,7 +164,7 @@ const Consulta: React.FC = () => {
         <IonButton
           className="ion-padding"
           onClick={() => {
-            setConsultaAbierta(true);
+            setConsultaAbiertaCara(true);
             cambiarIconoEstado();
           }}
           color="favorite"
@@ -153,7 +176,7 @@ const Consulta: React.FC = () => {
         <IonButton
           className="ion-padding"
           onClick={() => {
-            setConsultaAbierta(true);
+            setConsultaAbiertaPromedio(true);
             cambiarIconoEstado();
           }}
           color="favorite"
@@ -164,13 +187,41 @@ const Consulta: React.FC = () => {
         </IonButton>
         <ModalConsulta
           consultaAbierta={consultaAbierta}
-          cerrarModal={cerrarModal}
+          cerrarModal={cerrarModalConsulta}
           hora={horaYminuto}
           estado={estado}
           rutaImagen={icono}
           costeActual={costeActual}
-          texto= {texto}
-          kWatioTotal ={kWatios}
+          texto={texto}
+          kWatioTotal={kWatios}
+        />
+        <ModalConsultaListado
+          consultaAbierta={consultaAbiertaTodas}
+          cerrarModal={cerrarModalConsultaTodas}
+          hora={horaYminuto}
+          listadoHoras={listadoTodasHoras}
+          texto = 'todas las franjas horarias'
+        />
+         <ModalConsultaListado
+          consultaAbierta={consultaAbiertaPromedio}
+          cerrarModal={cerrarModalConsultaPromedio}
+          hora={horaYminuto}
+          listadoHoras={listadoHorasPromedio}
+          texto='las franjas horarias con precio promedio'
+        />
+         <ModalConsultaListado
+          consultaAbierta={consultaAbiertaBarata}
+          cerrarModal={cerrarModalConsultaBarata}
+          hora={horaYminuto}
+          listadoHoras={listadoHorasBarata}
+          texto='las franjas horarias con precio más bajo'
+        />
+        <ModalConsultaListado
+          consultaAbierta={consultaAbiertaCara}
+          cerrarModal={cerrarModalConsultaCara}
+          hora={horaYminuto}
+          listadoHoras={listadoHorasCara}
+          texto='las franjas horarias con precio más caro'
         />
       </IonContent>
     </IonPage>

@@ -13,7 +13,7 @@
       "kWatios": 0.253,
       "img": "/assets/img/secadora.jpg",
       "cantidad": 1,
-      "activado": true
+      "activado": false
     },
     {
       "id": 2,
@@ -28,7 +28,7 @@
       "nombre": "Ordenador",
       "kWatios": 0.20,
       "img": "/assets/img/pc.jpg",
-      "cantidad": 4,
-      "activado": true
+      "cantidad": 1,
+      "activado": false
     }
   ]

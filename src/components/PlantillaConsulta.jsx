@@ -2,7 +2,6 @@ import {
   IonCard,
   IonImg,
   IonModal,
-  IonItem,
   IonLabel,
   IonCardContent,
   IonContent,
@@ -40,7 +39,7 @@ const ModalConsulta = ({
             <IonCardSubtitle color='light'>
               En estos momentos estás consumiendo un total de {kWatioTotal} kWatio
             </IonCardSubtitle>
-            <IonCardTitle>{costeActual}</IonCardTitle>
+            <IonCardTitle>Con un coste total de : {costeActual}</IonCardTitle>
           </IonCardHeader>
 
           <IonCardContent className={estado} >
