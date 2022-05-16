@@ -73,7 +73,7 @@ const App: React.FC = () => (
             <IonMenuToggle>
               <IonItem routerLink="/addElemento">
                 <IonIcon color="medium" slot="start" icon={addCircle} />
-                <IonLabel> Añadir electrodomestico</IonLabel>
+                <IonLabel> Gestionar Electrodomésticos</IonLabel>
               </IonItem>
             </IonMenuToggle>
             <IonMenuToggle>

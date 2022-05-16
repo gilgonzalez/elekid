@@ -21,7 +21,7 @@ const Home: React.FC = () => {
               <Tarjeta titulo="CONSULTA" ruta ="/consulta" imagen="/assets/img/iconos/consulta.png"/>
             </IonCol>
             <IonCol>
-            <Tarjeta titulo="AGREGAR" ruta ="/addElemento" imagen="/assets/img/iconos/icon_elect.png"/>
+            <Tarjeta titulo="GESTIONAR" ruta ="/addElemento" imagen="/assets/img/iconos/icon_elect.png"/>
             </IonCol>
           </IonRow>
           <IonRow>

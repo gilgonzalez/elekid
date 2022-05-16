@@ -11,7 +11,15 @@ export const getDatos = createAsyncThunk<any, void>(
   SLICE_CONSTANTS.ACTIONS.FETCH_DATOS,
   async (_, thunkAPI) => {
     const response = await fetch(
-      "https://api.preciodelaluz.org/v1/prices/cheapests?zone=PCB&n=2"
+      "https://api.esios.ree.es/archives/70/download_json",
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json;charset=UTF-8",
+          authorization:
+            "fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899efa",
+        },
+      }
     );
     const data = await response.json();
 
