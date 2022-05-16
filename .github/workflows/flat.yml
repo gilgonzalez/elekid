@@ -1,0 +1,21 @@
+name: flat
+on:
+  schedule:
+    - cron: '34 10 * * *'
+  workflow_dispatch:
+jobs:
+  scheduled:
+    runs-on: windows-latest
+    steps:
+      - name: Setup deno
+        uses: denoland/setup-deno@main
+        with:
+          deno-version: v1.x
+      - name: Check out repo
+        uses: actions/checkout@v2
+      - name: Fetch data
+        uses: githubocto/flat@v3
+        with:
+          http_url: https://api.esios.ree.es/archives/70/download_json
+          downloaded_filename: src/json/precioHoy.json
+          authorization: fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899efa
