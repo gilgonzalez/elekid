@@ -10,6 +10,13 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;
+  /** color editado**/
+  --ion-color-favorite: #b01721;
+  --ion-color-favorite-rgb: 105, 187, 123;
+  --ion-color-favorite-contrast: #ffffff;
+  --ion-color-favorite-contrast-rgb: 255, 255, 255;
+  --ion-color-favorite-shade: #5ca56c;
+  --ion-color-favorite-tint: #78c288;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -83,6 +90,26 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+}
+.punta{
+
+  --ion-background-color:#b0432d;
+}
+.valle{
+
+  --ion-background-color:#2db049;
+}
+.llana{
+
+  --ion-background-color:#be9641;
+}
+.ion-color-favorite {
+  --ion-color-base: var(--ion-color-favorite);
+  --ion-color-base-rgb: var(--ion-color-favorite-rgb);
+  --ion-color-contrast: var(--ion-color-favorite-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-favorite-contrast-rgb);
+  --ion-color-shade: var(--ion-color-favorite-shade);
+  --ion-color-tint: var(--ion-color-favorite-tint);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -241,8 +268,5 @@ http://ionicframework.com/docs/theming/ */
     --ion-tab-bar-background: #1f1f1f;
 
     --ion-card-background: #1e1e1e;
-  }
-  .prueba{
-    margin-left:160px;
   }
 }

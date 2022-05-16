@@ -1,37 +1,109 @@
 import {
-
-    IonPage
-  } from "@ionic/react";
+  IonButton,
+  IonContent,
+  IonItem,
+  IonLabel,
+  IonNote,
+  IonPage,
+  IonTitle,
+} from "@ionic/react";
 import BarraMenu from "components/Menu";
-  import React, {useEffect, useState} from "react";
-  const Consulta: React.FC = () => {
-    const [data, setData] = useState([]);
-    useEffect(() =>{
-      const getUsers = async () =>{
-        const response = await fetch("https://api.preciodelaluz.org/v1/prices/cheapests?zone=PCB&n=2",  { mode: 'no-cors'})
-        const data = await response.json();
-          setData(data)
-      };
-      getUsers().catch(null);
-    },[])
-    
-    return (
-      <IonPage>
-        <BarraMenu titulo="CONSULTA"/>
-     
-        <p>DISTINTOS TIPOS DE CONSULTAS SE PODRÁN HACER ES APARTADO</p>
-        <div>
-          
-        </div>
-        <ul>
-            <li>Todos los precios de la zona https://api.preciodelaluz.org/v1/prices/all?zone=PCB </li>
-            <li>Precio promedio de la zona https://api.preciodelaluz.org/v1/prices/avg?zone=PCB </li>
-            <li>Precio más alto https://api.preciodelaluz.org/v1/prices/max?zone=PCB</li>
-            <li>Precio más bajo y hora https://api.preciodelaluz.org/v1/prices/min?zone=PCB</li>
-            <li>Precio en el momento actual https://api.preciodelaluz.org/v1/prices/now?zone=PCB</li>
-            <li>Horas más económicas https://api.preciodelaluz.org/v1/prices/cheapests?zone=PCB&n=2</li>
-        </ul>
-      </IonPage>
-    );
+import ModalConsulta from "components/PlantillaConsulta";
+import { useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "store/store";
+import { getDatos } from "./consultaSlice";
+const Consulta: React.FC = () => {
+  const [consultaAbierta, setConsultaAbierta] = useState(false);
+  const [estado, setEstado] = useState("llana");
+  const [icono, setIcono] = useState("sad");
+  const fechaActual = new Date()
+  const hora = `${fechaActual.getHours()} : ${fechaActual.getMinutes()}` 
+
+  const cerrarModal = () => {
+    setConsultaAbierta(false);
   };
-  export default Consulta;
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getDatos());
+  }, [dispatch]);
+
+  const datos = useAppSelector((state) => state.consulta.datos);
+  const kWatios = useAppSelector((state) => state.consulta.result);
+  const num = kWatios * 0.254
+  const redondeado = Math.round(((num) + Number.EPSILON) * 100) / 100
+  const costeActual = `${redondeado} €`
+  console.log(datos)
+  
+  const consultaDate = useAppSelector((state) =>
+    state.consulta.date ? new Date(state.consulta.date) : undefined
+  );
+  //SEGUIR POR AQUÍ, MANEJAR EL OBJETO JSON QUE RECIBO.
+
+  return (
+    <IonPage>
+      <BarraMenu titulo="CONSULTA" />
+      <IonContent>
+        <IonTitle className="ion-padding" size="large">
+          Listado de Consultas
+        </IonTitle>
+        <IonItem>
+        <IonLabel>Gasto actual en Kwatios</IonLabel>
+            <IonNote slot="end" className='bigger'><h4>{kWatios}</h4></IonNote>
+        </IonItem>
+        <IonItem>
+        <IonLabel>Hora Actual</IonLabel>
+            <IonNote slot="end" className='bigger'><h4>{fechaActual.getHours()} : {fechaActual.getMinutes()}</h4></IonNote>
+        </IonItem>
+        <IonButton
+          className="ion-padding"
+          onClick={() => setConsultaAbierta(true)}
+          color="favorite"
+          expand="full"
+          shape="round"
+        >
+          CONSULTAR COSTE ACTUAL
+        </IonButton>
+        <IonButton
+          className="ion-padding"
+          onClick={() => setConsultaAbierta(true)}
+          color="favorite"
+          expand="full"
+          shape="round"
+        >
+          CONSULTAR COSTE TODAS LAS HORAS
+        </IonButton>
+        <IonButton
+          className="ion-padding"
+          onClick={() => setConsultaAbierta(true)}
+          color="favorite"
+          expand="full"
+          shape="round"
+        >
+          CONSULTAR HORAS MÁS BARATAS
+        </IonButton>
+        <IonButton
+          className="ion-padding"
+          onClick={() => setConsultaAbierta(true)}
+          color="favorite"
+          expand="full"
+          shape="round"
+        >
+          CONSULTAR HORAS MÁS CARAS
+        </IonButton>
+        <IonButton
+          className="ion-padding"
+          onClick={() => setConsultaAbierta(true)}
+          color="favorite"
+          expand="full"
+          shape="round"
+        >
+          CONSULTAR HORAS PRECIO MEDIO
+        </IonButton>
+        <ModalConsulta consultaAbierta={consultaAbierta} cerrarModal={cerrarModal} hora={hora} estado='valle' rutaImagen='assets/img/iconos/happy.png' costeActual={costeActual}/>
+      </IonContent>
+    </IonPage>
+  );
+};
+export default Consulta;
