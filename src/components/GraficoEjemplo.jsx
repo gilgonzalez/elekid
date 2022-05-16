@@ -19,8 +19,6 @@ total /= 24;
 for (const element of hoyData) {
   element.promedio = total;
 }
-console.log(total);
-console.log(hoyData);
 
 export default class ExampleGraphic extends PureComponent {
   static demoUrl = "https://codesandbox.io/s/simple-area-chart-4ujxw";

@@ -122,13 +122,15 @@ import { useLocalStorage } from "store/useLocalStorage";
     eActivos.map((item: { kWatios: number; cantidad: number }) => {
       total += item.kWatios * item.cantidad;
     });
+    const totalReducido = Math.round((total + Number.EPSILON) * 100) / 100;
     //Utilizo el dispatcher para tener disponible esta información en toda la aplicación
     present({
       buttons: [{ text: "hide", handler: () => dismiss() }],
-      message: "El total de kWatios es " + total,
+      message: "El total de kWatios es " + totalReducido,
       duration: 5000,
     });
-    dispatch(setKWatios(total));
+    
+    dispatch(setKWatios(totalReducido));
     dispatch(setConsultaDate(new Date().getTime()));
   }, [dispatch, listadoElectrodomesticos]);
   //Utilizando el useState, cambio el listado por uno filtrado, quitando el elemento que tiene el mismo id

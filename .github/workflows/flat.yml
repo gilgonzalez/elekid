@@ -1,8 +1,11 @@
 name: flat
 on:
   schedule:
-    - cron: '34 10 * * *'
-  workflow_dispatch:
+    - cron: 34 10 * * *
+  workflow_dispatch: null
+  push:
+    paths:
+      - .github/workflows/flat.yml
 jobs:
   scheduled:
     runs-on: windows-latest
@@ -18,4 +21,4 @@ jobs:
         with:
           http_url: https://api.esios.ree.es/archives/70/download_json
           downloaded_filename: src/json/precioHoy.json
-          authorization: fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899efa
+          authorization: {nada que ver aqui}

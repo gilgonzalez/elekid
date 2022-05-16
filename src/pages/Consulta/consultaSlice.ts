@@ -10,14 +10,11 @@ const SLICE_CONSTANTS = {
 export const getDatos = createAsyncThunk<any, void>(
   SLICE_CONSTANTS.ACTIONS.FETCH_DATOS,
   async (_, thunkAPI) => {
-    const response = await fetch('https://api.esios.ree.es/archives/70/download_json', { 
-      method: 'post', 
-      headers: new Headers({
-        'Authorization': 'fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899efa', 
-      }), 
-      body: 'A=1&B=2'
-    }
-    );
+    const response = await fetch('https://api.esios.ree.es/archives/70/download_json', {
+      method: "GET",
+      headers: { "Content-type": "application/json;charset=UTF-8",
+      "authorization" : "fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899efa"},
+    });
     const data = await response.json();
 
     return data;
