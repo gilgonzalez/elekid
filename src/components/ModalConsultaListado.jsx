@@ -30,7 +30,7 @@ import {
           <IonCard>
             <IonCardHeader>
               <IonCardSubtitle color="dark">
-                A continuación se muestran {texto}
+                A continuación, se muestran {texto}
               </IonCardSubtitle>
             </IonCardHeader>
             <IonCardContent>

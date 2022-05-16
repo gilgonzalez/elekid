@@ -43,13 +43,11 @@ const loadKwInicial = () => {
 
 // https://github.com/jorgeatgu/apaga-luz/blob/main/update_create_datasets.js
 const transform_today_prices = (json_today_prices: any) => {
-  function createZone(hour: number) {
-    if (hour >= 0 && hour < 8) {
+  function createZone(price: number) {
+    if (price <=0.24) {
       return "valle";
     } else if (
-      (hour >= 8 && hour < 10) ||
-      (hour >= 14 && hour < 18) ||
-      (hour >= 22 && hour < 24)
+      price >0.24 && price <=0.28
     ) {
       return "llano";
     } else {
@@ -64,7 +62,7 @@ const transform_today_prices = (json_today_prices: any) => {
         day: Dia,
         hour: +get_first_hour,
         price: +PCB.split(",")[0] / 1000,
-        zone: createZone(+get_first_hour),
+        zone: createZone(+(+PCB.split(",")[0] / 1000)),
       };
     }
   );
