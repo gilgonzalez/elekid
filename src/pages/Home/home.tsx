@@ -19,7 +19,7 @@ const Home: React.FC = () => {
             </IonCol>
             <IonCol size="6" sizeMd="4" sizeXl="2">
               <Tarjeta
-                titulo="GESTIONAR"
+                titulo="GESTIONA"
                 ruta="/addElemento"
                 imagen="/assets/img/iconos/icon_elect.png"
               />
@@ -27,14 +27,14 @@ const Home: React.FC = () => {
 
             <IonCol size="6" sizeMd="4" sizeXl="2">
               <Tarjeta
-                titulo="COMPARATIVA"
+                titulo="GRÁFICO POR HORAS"
                 ruta="/comparativa"
                 imagen="/assets/img/iconos/grafico.png"
               />
             </IonCol>
             <IonCol size="6" sizeMd="4" sizeXl="2">
               <Tarjeta
-                titulo="HISTORICO"
+                titulo="GRÁFICO HISTÓRICO"
                 ruta="/historico"
                 imagen="/assets/img/iconos/graficoLinear.png"
               />
@@ -49,7 +49,7 @@ const Home: React.FC = () => {
             </IonCol>
             <IonCol size="6" sizeMd="4" sizeXl="2">
               <Tarjeta
-                titulo="INFORMACION"
+                titulo="MÁS INFO"
                 ruta="/about-us"
                 imagen="/assets/img/iconos/about.png"
               />

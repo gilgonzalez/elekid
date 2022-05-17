@@ -17,6 +17,14 @@
     },
     {
       "id": 2,
+      "nombre": "Vitroceramica",
+      "kWatios": 1.85,
+      "img": "/assets/img/vitro.jpg",
+      "cantidad": 1,
+      "activado": false
+    },
+    {
+      "id": 3,
       "nombre": "Televisor",
       "kWatios": 0.150,
       "img": "/assets/img/tv.png",
@@ -24,10 +32,60 @@
       "activado": false
     },
     {
-      "id": 3,
+      "id": 4,
+      "nombre": "Frigorífico",
+      "kWatios": 1.81,
+      "img": "/assets/img/frigo.jpg",
+      "cantidad": 1,
+      "activado": false
+    },
+    {
+      "id": 5,
+      "nombre": "Congelador",
+      "kWatios": 1.51,
+      "img": "/assets/img/congelador.jpg",
+      "cantidad": 1,
+      "activado": false
+    },
+    {
+      "id": 6,
       "nombre": "Ordenador",
       "kWatios": 0.20,
       "img": "/assets/img/pc.jpg",
+      "cantidad": 1,
+      "activado": false
+    },
+    {
+      "id": 7,
+      "nombre": "Aire Acondicionado",
+      "kWatios": 1,
+      "img": "/assets/img/aire.jpg",
+      "cantidad": 1,
+      "activado": false
+    },
+    {
+      "id": 8,
+      "nombre": "Radiador",
+      "kWatios": 2,
+      "img": "/assets/img/radiador.jpg",
+      "cantidad": 1,
+      "activado": false
+    }
+    ,
+    {
+      "id": 9,
+      "nombre": "Horno",
+      "kWatios": 1.2,
+      "img": "/assets/img/horno.jpg",
+      "cantidad": 1,
+      "activado": false
+    }
+    ,
+    {
+      "id": 10,
+      "nombre": "Bombilla LED",
+      "kWatios": 0.01,
+      "img": "/assets/img/led.jpg",
       "cantidad": 1,
       "activado": false
     }

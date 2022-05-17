@@ -46,6 +46,7 @@ const Consulta: React.FC = () => {
   );
   console.log(listadoHorasPromedio);
   const tramo = hoyData?.find((tramo: { hour: number }) => tramo.hour === hora);
+  
 
   const cerrarModalConsulta = () => {
     setConsultaAbierta(false);
@@ -101,9 +102,10 @@ const Consulta: React.FC = () => {
 
   const kWatios = useAppSelector((state) => state.consulta.result);
   console.log(kWatios);
-  const num = kWatios * 0.254;
+  const num = kWatios * tramo?.price;
   const redondeado = Math.round((num + Number.EPSILON) * 100) / 100;
-  const costeActual = `${redondeado} €`;
+  const costeActual = redondeado;
+  const costeActualConSimbolo = `${redondeado} €`;
 
   useEffect(() => {
     dispatch(getDatos());
@@ -127,13 +129,13 @@ const Consulta: React.FC = () => {
           Listado de Consultas
         </IonTitle>
         <IonItem>
-          <IonLabel>Gasto actual en Kwatios</IonLabel>
+          <IonLabel color='primary'>Gasto actual en Kwatios</IonLabel>
           <IonNote slot="end" className="bigger">
             <h4>{kWatios}</h4>
           </IonNote>
         </IonItem>
         <IonItem>
-          <IonLabel>Hora Actual</IonLabel>
+          <IonLabel color='primary'>Hora Actual</IonLabel>
           <IonNote slot="end" className="bigger">
             <h4>
               {fechaActual.getHours()} : {fechaActual.getMinutes()}
@@ -206,7 +208,8 @@ const Consulta: React.FC = () => {
           hora={horaYminuto}
           estado={estado}
           rutaImagen={icono}
-          costeActual={costeActual}
+          costeActualConSimbolo={costeActualConSimbolo}
+          costeActual = {costeActual}
           texto={texto}
           kWatioTotal={kWatios}
         />

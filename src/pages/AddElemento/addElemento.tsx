@@ -152,16 +152,25 @@ const AddElemento: React.FC = () => {
   }, [dismiss, dispatch, listadoElectrodomesticos, present, setKwInicial]);
   //Utilizando el useState, cambio el listado por uno filtrado, quitando el elemento que tiene el mismo id
   function borrarElemento(id: number) {
-    setListadoElectrodomesticos(
-      listadoElectrodomesticos.filter(
-        (electrodomestico: { id: number }) => electrodomestico.id !== id
-      )
-    );
+    if(id > 10){
+      setListadoElectrodomesticos(
+        listadoElectrodomesticos.filter(
+          (electrodomestico: { id: number }) => electrodomestico.id !== id
+        )
+      );
+    }else {
+      present({
+        buttons: [{ text: "hide", handler: () => dismiss() }],
+        message: "El electrodoméstico seleccionado es permanente",
+        duration: 2000,
+      });
+    }
+    
   }
 
   return (
     <IonPage>
-      <Menu titulo="AGREGAR ELECTRODOMESTICO" />
+      <Menu titulo="AGREGAR" />
       <IonContent>
         <IonList>
           <IonItemDivider color="secondary">
@@ -190,22 +199,25 @@ const AddElemento: React.FC = () => {
             <IonRow>
               <IonCol>
                 <IonButton
+                  expand ='block'
+                  
                   color="medium"
                   onClick={aceptarClick}
                   size="large"
                   className="ion-margin"
                 >
-                  AGREGAR NUEVO ELEMENTO
+                  AÑADIR NUEVO APARATO
                 </IonButton>
               </IonCol>
               <IonCol>
                 <IonButton
+                  expand ='block'
                   color="danger"
                   onClick={calcularkWatios}
                   size="large"
                   className="ion-margin"
                 >
-                  CALCULAR KWATIOS TOTALES
+                  CALCULAR KW TOTALES
                 </IonButton>
               </IonCol>
             </IonRow>
