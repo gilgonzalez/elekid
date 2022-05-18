@@ -15,7 +15,11 @@ import { useAppSelector } from "store/store";
 //const hoyData = require("../json/precio_hoy.json");
 
 const ExampleGraphic = () => {
-  const hoyData = useAppSelector((state) => state.consulta.datos);
+  let hoyData = useAppSelector((state) => state.consulta.datos);
+
+  if(hoyData === undefined){
+    hoyData = require("../json/precio_hoy.json");
+  }
 
   const [hoyDataExt, setHoyDataExt] = useState(undefined);
   useEffect(() => {

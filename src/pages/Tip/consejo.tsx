@@ -38,14 +38,16 @@ const Consejo: React.FC = () => {
     console.log(inputNuevoTitulo.current!.value + ' '+ inputNuevaDescripcion.current!.value )
     if (inputNuevaDescripcion.current!.value==='' || inputNuevoTitulo.current!.value==='') {
       present({
-        buttons: [{ text: "hide", handler: () => dismiss() }],
+        buttons: [{ text: "Ocultar", handler: () => dismiss() }],
         message: "RELLENE TODOS LOS CAMPOS",
         duration: 3000,
       })
     } else {
       crearNuevoConsejo()
+      inputNuevoTitulo.current!.value = ''
+      inputNuevaDescripcion.current!.value = ''
       present({
-        buttons: [{ text: "hide", handler: () => dismiss() }],
+        buttons: [{ text: "Ocultar", handler: () => dismiss() }],
         message: "SUBIDO CON ÉXITO",
         duration: 3000,
       })
@@ -62,7 +64,7 @@ const Consejo: React.FC = () => {
       setFecha(consulta[n].fecha.toDate().toDateString());
     };
     getConsejo();
-  }, [titulo]);
+  }, []);
   return (
     <IonPage>
         <BarraMenu titulo="CONSEJO" />

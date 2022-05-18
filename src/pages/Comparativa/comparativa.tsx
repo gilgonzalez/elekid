@@ -17,7 +17,7 @@ const Comparativa: React.FC = () => {
   return (
     <IonPage>
       <BarraMenu titulo="COMPARATIVA" />
-      <IonContent className="ion-padding">
+      <IonContent fullscreen={true}>
         <ExampleGraphic />
       </IonContent>
     </IonPage>

@@ -27,10 +27,14 @@ const Consulta: React.FC = () => {
   const hora = fechaActual.getHours();
   const horaYminuto = `${fechaActual.getHours()} : ${fechaActual.getMinutes()}`;
   const [texto, setTexto] = useState("");
+  //const [listadoConsulta, setListadoConsulta] = useLocalStorage('consulta', defaultConsulta);
+
 
   //const hoyData = require("../../json/precio_hoy.json");
-  const hoyData = useAppSelector((state) => state.consulta.datos);
-
+  let hoyData = useAppSelector((state) => state.consulta.datos);
+  if(hoyData===undefined){
+    hoyData = require("../../json/precio_hoy.json")
+  }
   /*for(const elemento of hoyData){
     console.log(hoyData)
   }*/
