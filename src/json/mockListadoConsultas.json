@@ -1,0 +1,52 @@
+[
+    {
+        "precioReal": 1.61,
+        "precioConPlacas": 0.325,
+        "hora":9
+    },
+    {
+        "precioReal": 2.4,
+        "precioConPlacas": 0.48,
+        "hora":10
+    },
+    {
+        "precioReal": 2.8,
+        "precioConPlacas": 0.56,
+        "hora":11
+    },
+    {
+        "precioReal": 3.5,
+        "precioConPlacas": 0.7,
+        "hora":12
+    },
+    {
+        "precioReal": 4,
+        "precioConPlacas": 0.8,
+        "hora":13
+    },
+    {
+        "precioReal": 4.3,
+        "precioConPlacas": 0.86,
+        "hora":14
+    },
+    {
+        "precioReal": 3.9,
+        "precioConPlacas": 0.78,
+        "hora":15
+    },
+    {
+        "precioReal": 3.2,
+        "precioConPlacas": 0.64,
+        "hora":16
+    },
+    {
+        "precioReal": 2.8,
+        "precioConPlacas": 0.56,
+        "hora":17
+    },
+    {
+        "precioReal": 2.1,
+        "precioConPlacas": 0.42,
+        "hora":16
+    }
+]

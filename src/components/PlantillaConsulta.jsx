@@ -22,7 +22,7 @@ const ModalConsulta = ({
   costeActual,
   texto,
   kWatioTotal,
-  costeActualConSimbolo,
+  costeActualConSimbolo
 }) => {
   const costeReducido = +costeActual * 0.2;
   const costeReducidoRedondeado = Math.round((costeReducido + Number.EPSILON) * 100) / 100;

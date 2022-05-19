@@ -6,12 +6,14 @@ import {
   IonNote,
   IonPage,
   IonTitle,
+  useIonToast,
 } from "@ionic/react";
 import BarraMenu from "components/Menu";
 import ModalConsultaListado from "components/ModalConsultaListado";
 import ModalConsulta from "components/PlantillaConsulta";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/store";
+import { useLocalStorage } from "store/useLocalStorage";
 import { getDatos } from "./consultaSlice";
 
 const Consulta: React.FC = () => {
@@ -20,6 +22,7 @@ const Consulta: React.FC = () => {
   const [consultaAbiertaBarata, setConsultaAbiertaBarata] = useState(false);
   const [consultaAbiertaCara, setConsultaAbiertaCara] = useState(false);
   const [consultaAbiertaPromedio, setConsultaAbiertaPromedio] = useState(false);
+  const defaultListadoConsultas = require('../../json/mockListadoConsultas.json');
 
   const [estado, setEstado] = useState("");
   const [icono, setIcono] = useState("");
@@ -27,7 +30,23 @@ const Consulta: React.FC = () => {
   const hora = fechaActual.getHours();
   const horaYminuto = `${fechaActual.getHours()} : ${fechaActual.getMinutes()}`;
   const [texto, setTexto] = useState("");
-  //const [listadoConsulta, setListadoConsulta] = useLocalStorage('consulta', defaultConsulta);
+  const [toast, setToast] = useIonToast();
+
+
+  const [listadoConsulta, setListadoConsulta] = useLocalStorage('consulta', defaultListadoConsultas);
+  console.log(listadoConsulta);
+
+  const addConsulta = ()=>{
+    const costeReducido = +costeActual * 0.2;
+    const costeReducidoRedondeado = Math.round((costeReducido + Number.EPSILON) * 100) / 100;
+    const consulta = {precioReal: costeActual, precioConPlacas: costeReducidoRedondeado, hora: hora }
+    listadoConsulta.push(consulta);
+    setListadoConsulta(listadoConsulta)
+    if (listadoConsulta.length > 25){
+      listadoConsulta.shift();
+      setListadoConsulta(listadoConsulta)
+    }
+  }
 
 
   //const hoyData = require("../../json/precio_hoy.json");
@@ -149,8 +168,18 @@ const Consulta: React.FC = () => {
         <IonButton
           className="ion-padding"
           onClick={() => {
-            setConsultaAbierta(true);
-            cambiarIconoEstado();
+            if (kWatios===0 || kWatios === undefined){
+              toast({
+                buttons: [{ text: "OCULTAR", handler: () => setToast() }],
+                message: "ASEGÚRESE QUE HA CALCULADO LOS KWATIOS",
+                duration: 3000,
+              });
+            }else {
+              setConsultaAbierta(true);
+              addConsulta();
+              cambiarIconoEstado();
+              
+            }  
           }}
           color="favorite"
           expand="full"

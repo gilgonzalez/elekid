@@ -1,10 +1,10 @@
 import { IonContent, IonPage } from "@ionic/react";
 
 import React, { useEffect } from "react";
-import ExampleGraphic from "components/GraficoEjemplo";
 import BarraMenu from "components/Menu";
 import { useAppDispatch } from "store/store";
 import { getDatos } from "pages/Consulta/consultaSlice";
+import GraficoPrecioPorHoras from "components/GraficoPrecioPorHoras";
 
 const Comparativa: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -18,7 +18,7 @@ const Comparativa: React.FC = () => {
     <IonPage>
       <BarraMenu titulo="COMPARATIVA" />
       <IonContent fullscreen={true}>
-        <ExampleGraphic />
+        <GraficoPrecioPorHoras />
       </IonContent>
     </IonPage>
   );

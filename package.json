@@ -34,6 +34,7 @@
     "@visx/scale": "^2.2.2",
     "@visx/shape": "^2.4.0",
     "@visx/visx": "^2.9.0",
+    "axios": "^0.27.2",
     "d3-array": "^2.4.0",
     "firebase": "^9.8.1",
     "ionicons": "^5.4.0",

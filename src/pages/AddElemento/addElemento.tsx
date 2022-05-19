@@ -37,6 +37,7 @@ const AddElemento: React.FC = () => {
   const inputkWatios = useRef<HTMLIonInputElement>(null);
   //Rescato de un JSON un listado de electrodomesticos por default
   const electrodomesticosDefault = require("../../json/electrodomesticos.json");
+  console.log(electrodomesticosDefault.length);
   //UseState para manejar el listado de electrodomesticos, tanto para añadir como para eliminar
   const [listadoElectrodomesticos, setListadoElectrodomesticos] =
     //UseLocalStorage está pensado para que persista la información en local
@@ -77,7 +78,7 @@ const AddElemento: React.FC = () => {
   };
 
   //Recoge los datos que haya en los inputs y los utiliza para crear un nuevo objeto que se añade al listado de electrodomesticos
-  const aceptarClick = useCallback(() => {
+  const addElectrodomestico = useCallback(() => {
     //Con esta sintaxis nos aseguramos que el valor no sea undefined ni null
     const nombreElectrodomestico = inputNombreElectrodomestico.current!
       .value as string;
@@ -152,7 +153,7 @@ const AddElemento: React.FC = () => {
   }, [dismiss, dispatch, listadoElectrodomesticos, present, setKwInicial]);
   //Utilizando el useState, cambio el listado por uno filtrado, quitando el elemento que tiene el mismo id
   function borrarElemento(id: number) {
-    if(id > 10){
+    if(id > electrodomesticosDefault.length -1) {
       setListadoElectrodomesticos(
         listadoElectrodomesticos.filter(
           (electrodomestico: { id: number }) => electrodomestico.id !== id
@@ -202,7 +203,7 @@ const AddElemento: React.FC = () => {
                   expand ='block'
                   
                   color="medium"
-                  onClick={aceptarClick}
+                  onClick={addElectrodomestico}
                   size="large"
                   className="ion-margin"
                 >

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import LocalStorage from "services/local-storage";
+import axios from 'axios';
 
 const SLICE_CONSTANTS = {
   NAME: "consulta",
@@ -19,9 +20,11 @@ export const getDatos = createAsyncThunk<any, void>(
           "Content-type": "application/json;charset=UTF-8",
           authorization:
             "fed42b06bccdbea9bf8eba44f3cdfd357d2a3f8ad02849017ea6c3aa88899ef",
+            
         },
       }
     );
+    //const data = await axios.get("https://api.esios.ree.es/archives/70/download_json")
     const data = await response.json();
 
     return data;
