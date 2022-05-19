@@ -22,7 +22,7 @@ const Consulta: React.FC = () => {
   const [consultaAbiertaBarata, setConsultaAbiertaBarata] = useState(false);
   const [consultaAbiertaCara, setConsultaAbiertaCara] = useState(false);
   const [consultaAbiertaPromedio, setConsultaAbiertaPromedio] = useState(false);
-  const defaultListadoConsultas = require('../../json/mockListadoConsultas.json');
+  const defaultListadoConsultas = require("../../json/mockListadoConsultas.json");
 
   const [estado, setEstado] = useState("");
   const [icono, setIcono] = useState("");
@@ -32,27 +32,42 @@ const Consulta: React.FC = () => {
   const [texto, setTexto] = useState("");
   const [toast, setToast] = useIonToast();
 
-
-  const [listadoConsulta, setListadoConsulta] = useLocalStorage('consulta', defaultListadoConsultas);
+  const [listadoConsulta, setListadoConsulta] = useLocalStorage(
+    "consulta",
+    defaultListadoConsultas
+  );
   console.log(listadoConsulta);
 
-  const addConsulta = ()=>{
+  const addConsulta = () => {
     const costeReducido = +costeActual * 0.2;
-    const costeReducidoRedondeado = Math.round((costeReducido + Number.EPSILON) * 100) / 100;
-    const consulta = {precioReal: costeActual, precioConPlacas: costeReducidoRedondeado, hora: hora }
-    listadoConsulta.push(consulta);
-    setListadoConsulta(listadoConsulta)
-    if (listadoConsulta.length > 25){
-      listadoConsulta.shift();
-      setListadoConsulta(listadoConsulta)
+    const costeReducidoRedondeado =
+      Math.round((costeReducido + Number.EPSILON) * 100) / 100;
+    const consulta = {
+      precioReal: costeActual,
+      precioConPlacas: costeReducidoRedondeado,
+      hora: hora,
+    };
+    const ultimoElemento = listadoConsulta.length - 1;
+    const validacionConsulta =
+      listadoConsulta[ultimoElemento].precioReal === consulta.precioReal &&
+      listadoConsulta[ultimoElemento].precioConPlacas === consulta.precioConPlacas &&  
+      listadoConsulta[ultimoElemento].hora === consulta.hora;
+    if (!validacionConsulta) {
+      listadoConsulta.push(consulta);
+      setListadoConsulta(listadoConsulta);
+    } else {
+      console.log("es la misma consulta");
     }
-  }
-
+    if (listadoConsulta.length > 24) {
+      listadoConsulta.shift();
+      setListadoConsulta(listadoConsulta);
+    }
+  };
 
   //const hoyData = require("../../json/precio_hoy.json");
   let hoyData = useAppSelector((state) => state.consulta.datos);
-  if(hoyData===undefined){
-    hoyData = require("../../json/precio_hoy.json")
+  if (hoyData === undefined) {
+    hoyData = require("../../json/precio_hoy.json");
   }
   /*for(const elemento of hoyData){
     console.log(hoyData)
@@ -69,7 +84,6 @@ const Consulta: React.FC = () => {
   );
   console.log(listadoHorasPromedio);
   const tramo = hoyData?.find((tramo: { hour: number }) => tramo.hour === hora);
-  
 
   const cerrarModalConsulta = () => {
     setConsultaAbierta(false);
@@ -152,13 +166,13 @@ const Consulta: React.FC = () => {
           Listado de Consultas
         </IonTitle>
         <IonItem>
-          <IonLabel color='primary'>Gasto actual en Kwatios</IonLabel>
+          <IonLabel color="primary">Gasto actual en Kwatios</IonLabel>
           <IonNote slot="end" className="bigger">
             <h4>{kWatios}</h4>
           </IonNote>
         </IonItem>
         <IonItem>
-          <IonLabel color='primary'>Hora Actual</IonLabel>
+          <IonLabel color="primary">Hora Actual</IonLabel>
           <IonNote slot="end" className="bigger">
             <h4>
               {fechaActual.getHours()} : {fechaActual.getMinutes()}
@@ -168,18 +182,17 @@ const Consulta: React.FC = () => {
         <IonButton
           className="ion-padding"
           onClick={() => {
-            if (kWatios===0 || kWatios === undefined){
+            if (kWatios === 0 || kWatios === undefined) {
               toast({
                 buttons: [{ text: "OCULTAR", handler: () => setToast() }],
                 message: "ASEGÚRESE QUE HA CALCULADO LOS KWATIOS",
                 duration: 3000,
               });
-            }else {
+            } else {
               setConsultaAbierta(true);
               addConsulta();
               cambiarIconoEstado();
-              
-            }  
+            }
           }}
           color="favorite"
           expand="full"
@@ -242,7 +255,7 @@ const Consulta: React.FC = () => {
           estado={estado}
           rutaImagen={icono}
           costeActualConSimbolo={costeActualConSimbolo}
-          costeActual = {costeActual}
+          costeActual={costeActual}
           texto={texto}
           kWatioTotal={kWatios}
         />

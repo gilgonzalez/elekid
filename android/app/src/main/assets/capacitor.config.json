@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "elekid",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

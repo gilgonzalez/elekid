@@ -170,7 +170,7 @@ const AddElemento: React.FC = () => {
   }
 
   return (
-    <IonPage>
+    <IonPage color='green'>
       <Menu titulo="AGREGAR" />
       <IonContent>
         <IonList>
@@ -202,7 +202,7 @@ const AddElemento: React.FC = () => {
                 <IonButton
                   expand ='block'
                   
-                  color="medium"
+                  color="verde"
                   onClick={addElectrodomestico}
                   size="large"
                   className="ion-margin"
@@ -223,7 +223,7 @@ const AddElemento: React.FC = () => {
               </IonCol>
             </IonRow>
           </IonGrid>
-          <IonItemDivider color="medium">Listado de elementos</IonItemDivider>
+          <IonItemDivider color="verde">Listado de elementos</IonItemDivider>
           <IonList className="ion-padding">
             {listadoElectrodomesticos.map(
               (elemento: {

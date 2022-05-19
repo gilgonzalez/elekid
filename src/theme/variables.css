@@ -1,6 +1,7 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
+@media (prefers-color-scheme: light){
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
@@ -23,7 +24,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-verde-contrast: #ffffff;
   --ion-color-verde-contrast-rgb: 255, 255, 255;
   --ion-color-verde-shade: #5ca56c;
-  --ion-color-verde-tint: #78c288;
+  --ion-color-favorite-tint: #78c288;
 
   /** secondary **/
   --ion-color-secondary: #3dc2ff;
@@ -127,6 +128,7 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-shade: var(--ion-color-verde-shade);
   --ion-color-tint: var(--ion-color-verde-tint);
 }
+}
 
 @media (prefers-color-scheme: dark) {
   /*
@@ -141,6 +143,8 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-primary-contrast-rgb: 255,255,255;
     --ion-color-primary-shade: #3a7be0;
     --ion-color-primary-tint: #5598ff;
+
+    
 
     --ion-color-secondary: #50c8ff;
     --ion-color-secondary-rgb: 80,200,255;
@@ -197,6 +201,20 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
+   
+  }
+  .punta{
+
+    --ion-background-color:#b0432d;
+  }
+  .valle{
+  
+    --ion-background-color:#2db049;
+  }
+  .llano{
+  
+    --ion-background-color:#be9641;
   }
 
   /*
