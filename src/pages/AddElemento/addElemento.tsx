@@ -104,7 +104,7 @@ const AddElemento: React.FC = () => {
     } else {
       //Muestra el toast
       present({
-        buttons: [{ text: "hide", handler: () => dismiss() }],
+        buttons: [{ text: "OCULTAR", handler: () => dismiss() }],
         message: "RELLENE TODOS LOS CAMPOS",
         duration: 3000,
       });
@@ -141,7 +141,7 @@ const AddElemento: React.FC = () => {
     const totalReducido = Math.round((total + Number.EPSILON) * 100) / 100;
 
     present({
-      buttons: [{ text: "hide", handler: () => dismiss() }],
+      buttons: [{ text: "ocultar", handler: () => dismiss() }],
       message: "El total de kWatios es " + totalReducido,
       duration: 5000,
     });
@@ -153,7 +153,9 @@ const AddElemento: React.FC = () => {
   }, [dismiss, dispatch, listadoElectrodomesticos, present, setKwInicial]);
   //Utilizando el useState, cambio el listado por uno filtrado, quitando el elemento que tiene el mismo id
   function borrarElemento(id: number) {
-    if(id > electrodomesticosDefault.length -1) {
+    console.log(id);
+    console.log(electrodomesticosDefault.length);
+    if(id > electrodomesticosDefault.length-1) {
       setListadoElectrodomesticos(
         listadoElectrodomesticos.filter(
           (electrodomestico: { id: number }) => electrodomestico.id !== id
@@ -161,7 +163,7 @@ const AddElemento: React.FC = () => {
       );
     }else {
       present({
-        buttons: [{ text: "hide", handler: () => dismiss() }],
+        buttons: [{ text: "ocultar", handler: () => dismiss() }],
         message: "El electrodoméstico seleccionado es permanente",
         duration: 2000,
       });
@@ -202,7 +204,7 @@ const AddElemento: React.FC = () => {
                 <IonButton
                   expand ='block'
                   
-                  color="verde"
+                  color="success"
                   onClick={addElectrodomestico}
                   size="large"
                   className="ion-margin"

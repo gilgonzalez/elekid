@@ -53,6 +53,7 @@ const Historico: React.FC = () => {
   return (
     <IonPage>
       <BarraMenu titulo="HISTORICO" />
+      <IonContent>
       <IonButton
         onClick={() => {
           setConsultaAbierta(true);
@@ -112,6 +113,8 @@ const Historico: React.FC = () => {
       </IonModal>
 
       <GraficoConsultasRealizadas  />
+      </IonContent>
+     
     </IonPage>
   );
 };

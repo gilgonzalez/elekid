@@ -26,7 +26,7 @@ export const getDatos = createAsyncThunk<any, void>(
     );
     //const data = await axios.get("https://api.esios.ree.es/archives/70/download_json")
     const data = await response.json();
-
+    
     return data;
   },
   {

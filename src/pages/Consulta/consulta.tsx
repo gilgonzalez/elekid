@@ -11,7 +11,7 @@ import {
 import BarraMenu from "components/Menu";
 import ModalConsultaListado from "components/ModalConsultaListado";
 import ModalConsulta from "components/PlantillaConsulta";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback,  useState } from "react";
 import { useAppDispatch, useAppSelector } from "store/store";
 import { useLocalStorage } from "store/useLocalStorage";
 import { getDatos } from "./consultaSlice";
@@ -144,7 +144,7 @@ const Consulta: React.FC = () => {
   const costeActual = redondeado;
   const costeActualConSimbolo = `${redondeado} €`;
 
-  useEffect(() => {
+  useCallback(() => {
     dispatch(getDatos());
   }, [dispatch]);
 
@@ -156,7 +156,6 @@ const Consulta: React.FC = () => {
   const consultaDate = useAppSelector((state) =>
     state.consulta.date ? new Date(state.consulta.date) : undefined
   );
-  //SEGUIR POR AQUÍ, MANEJAR EL OBJETO JSON QUE RECIBO.
 
   return (
     <IonPage>

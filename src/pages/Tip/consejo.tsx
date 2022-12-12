@@ -9,6 +9,7 @@ import {
   IonPage,
   IonTextarea,
   useIonToast,
+  IonContent
 } from "@ionic/react";
 import ConsejoTag from "components/ConsejoTag";
 import BarraMenu from "components/Menu";
@@ -68,7 +69,8 @@ const Consejo: React.FC = () => {
   return (
     <IonPage>
         <BarraMenu titulo="CONSEJO" />
-        <IonItem className="ion-align-items-center ion-margin" slot="fixed">
+        <IonContent>
+        <IonItem className="ion-align-items-center ion-margin" >
           <ConsejoTag
             fecha={fecha}
             titulo={titulo}
@@ -108,6 +110,8 @@ const Consejo: React.FC = () => {
             </IonFabButton>
           </IonFab>
         </div> 
+        </IonContent>
+        
     </IonPage>
   );
 };

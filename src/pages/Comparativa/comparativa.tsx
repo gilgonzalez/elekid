@@ -11,7 +11,6 @@ const Comparativa: React.FC = () => {
 
   useEffect(() => {
     dispatch(getDatos());
-    console.log("fetc");
   }, [dispatch]);
 
   return (
